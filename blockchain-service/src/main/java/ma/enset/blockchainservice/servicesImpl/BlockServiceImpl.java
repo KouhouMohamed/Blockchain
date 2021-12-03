@@ -10,6 +10,7 @@ import javax.xml.bind.DatatypeConverter;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.util.Collection;
+import java.util.Date;
 import java.util.UUID;
 
 @Service
@@ -30,7 +31,7 @@ public class BlockServiceImpl implements BlockService {
     }
     @Override
     public Block create_block(Collection<Transaction> transactions) {
-        Block block = new Block();
+        Block block = new Block(transactions, new Date());
         block.setId(UUID.randomUUID().toString());
         return block;
     }

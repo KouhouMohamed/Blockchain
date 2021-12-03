@@ -30,7 +30,7 @@ public class Block {
         this.transactions = transactions;
         this.create_date = date;
         this.previous_hash=null;
-        //this.blockchain=new Blockchain();
+        this.blockchain=new Blockchain();
 
     }
     // re implements function that return hash code
