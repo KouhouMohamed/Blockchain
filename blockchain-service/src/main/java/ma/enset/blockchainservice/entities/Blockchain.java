@@ -7,7 +7,8 @@ import lombok.NoArgsConstructor;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import java.util.Collection;
+import javax.persistence.Transient;
+import java.util.*;
 
 @Data
 @AllArgsConstructor
@@ -20,6 +21,12 @@ public class Blockchain {
     private int difficulty;
     private int miningReward;
     @OneToMany(mappedBy = "blockchain")
-    private Collection<Block> blocks;
+    private List<Block> blocks;
 
+
+
+    @Override
+    public int hashCode(){
+        return id.hashCode()+name.hashCode()+difficulty+miningReward;
+    }
 }
