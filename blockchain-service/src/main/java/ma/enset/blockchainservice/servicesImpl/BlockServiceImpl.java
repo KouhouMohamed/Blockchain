@@ -53,7 +53,7 @@ public class BlockServiceImpl implements BlockService {
     public BlockDto create_block(Collection<TransactionDto> transactionsDto) {
         Collection<Transaction> transactions = new ArrayList<>();
         Block block = new Block(UUID.randomUUID().toString(),null, new Date());
-        blockRepository.save(block);
+        //blockRepository.save(block);
 
         transactionsDto.forEach(transactionDto -> {
             Transaction transaction = transactionMapper.TransactionDtoToTransaction(transactionDto);
@@ -78,7 +78,7 @@ public class BlockServiceImpl implements BlockService {
                     generate_hash(block);
                     sub = block.getHash().substring(0, block.getBlockchain().getDifficulty());
                     block.setNonce(block.getNonce()+1);
-                    System.out.println(block.getHash());
+                    //System.out.println(block.getHash());
                 }while (!hash_start.equals(sub));
                 blockRepository.save(block);
             }

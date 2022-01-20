@@ -38,22 +38,41 @@ public class BlockchainServiceImpl implements BlockchainSerice {
 
 
     @Override
-    public BlockchainDto get_blockchain(String id) {
-        return blockchainMapper.BlockchainToBlockchainDto(blockchainRepository.getById(id));
+    public BlockchainDto get_blockchain(String blockchainName) {
+        return blockchainMapper.BlockchainToBlockchainDto(blockchainRepository.findByName(blockchainName));
     }
 
     @Override
-    public BlockchainDto pendingTransactions(String blockchain_id, Collection<TransactionDto> transactionDtos) {
-        System.out.println("Pending transactions method");
+    public BlockchainDto add_block(String blockchainName, BlockDto blockDto) {
+        Blockchain blockchain = blockchainRepository.findByName(blockchainName);
+        if (blockchain != null){
+            Block block = blockMapper.BlockDtoToBlock(blockDto);
+            block.setBlockchain(blockchain);
+            block.setPrevious_hash(get_last_block(blockchain.getId()).getHash());
+            blockRepository.save(block);
+
+        }
+        return blockchainMapper.BlockchainToBlockchainDto(blockchainRepository.findByName(blockchainName));
+    }
+
+    @Override
+    public BlockchainDto pendingTransactions(String blockchainName, Collection<TransactionDto> transactionDtos) {
+        //System.out.println("Pending transactions method");
         BlockDto block = blockService.create_block(transactionDtos);
-        mine_block(blockchain_id,block.getId());
-        return get_blockchain(blockchain_id);
+        mine_block(blockchainName,block.getId());
+        return get_blockchain(blockchainName);
     }
 
     @Override
-    public BlockchainDto create_blockchain() {
-        Blockchain blockchain = new Blockchain(UUID.randomUUID().toString(),"my_blockchain",2,
-                2, null);
+    public BlockchainDto create_blockchain(BlockchainDto blockchainDTO) {
+
+        Blockchain blockchain = new Blockchain();
+        blockchain.setId(UUID.randomUUID().toString());
+        blockchain.setName(blockchainDTO.getName());
+        blockchain.setDifficulty(blockchainDTO.getDifficulty());
+        blockchain.setMiningReward(blockchainDTO.getMiningReward());
+        blockchainDTO.setBlocks(null);
+
         BlockDto genisisBlock = blockService.create_block(new ArrayList<>());
 
         Blockchain blockchain1 = blockchainRepository.save(blockchain);
@@ -67,34 +86,35 @@ public class BlockchainServiceImpl implements BlockchainSerice {
     }
 
     @Override
-    public BlockchainDto mine_block(String blockchain_id, String miner_block_id) {
-        BlockchainDto blockchainDto = get_blockchain(blockchain_id);
+    public BlockchainDto mine_block(String blockchainName, String miner_block_id) {
+        BlockchainDto blockchainDto = get_blockchain(blockchainName);
         Blockchain blockchain = blockchainMapper.BlockchainDtoToBlockchain(blockchainDto);
         Block miner_block = blockRepository.findById(miner_block_id).get();
         if(blockchain!=null && miner_block!=null){
-            String previous_hash = (get_last_block(blockchain_id)!=null)?get_last_block(blockchain_id).getHash():null;
+            String previous_hash = (get_last_block(blockchain.getId())!=null)?get_last_block(blockchainName).getHash():null;
             miner_block.setPrevious_hash(previous_hash);
             miner_block.setBlockchain(blockchain);
             blockRepository.save(miner_block);
             blockService.mine_block(miner_block.getId());
         }
         if (miner_block==null) return null;
-        return get_blockchain(blockchain_id);
+        return get_blockchain(blockchainName);
     }
 
     @Override
     public BlockDto get_last_block(String blockchain_id) {
-        BlockchainDto blockchain = get_blockchain(blockchain_id);
+        Blockchain blockchain = blockchainRepository.findById(blockchain_id).get();
         if(blockchain!=null){
-            List<BlockDto> blocks= blockchain.getBlocks();
-            if (blocks!=null ) return blocks.get(blockchain.getBlocks().size()-1);
+            List<BlockDto> blocks= blockService.get_block_in_blockchain(blockchain_id);
+            System.out.println("******* : "+blocks.size());
+            if (blocks!=null ) return blocks.get(blocks.size()-1);
         }
         return null;
     }
 
     @Override
-    public boolean verify_blockchain(String blockchain_id) {
-        BlockchainDto blockchain = get_blockchain(blockchain_id);
+    public boolean verify_blockchain(String blockchainName) {
+        BlockchainDto blockchain = get_blockchain(blockchainName);
         if (blockchain==null) return false;
         Collection<Block> blocks = new ArrayList<>();
         blockchain.getBlocks().forEach(blockDto -> {
@@ -119,8 +139,8 @@ public class BlockchainServiceImpl implements BlockchainSerice {
     }
 
     @Override
-    public Collection<BlockDto> get_blockchain_blocks(String blockchain_id) {
-        BlockchainDto blockchain = get_blockchain(blockchain_id);
+    public Collection<BlockDto> get_blockchain_blocks(String blockchainName) {
+        BlockchainDto blockchain = get_blockchain(blockchainName);
         if(blockchain!=null){return blockchain.getBlocks();}
         return null;
     }

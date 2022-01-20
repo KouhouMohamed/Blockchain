@@ -20,7 +20,7 @@ public class BlockController {
         return blockService.getBlock(block_id);
     }
 
-    @GetMapping(path = "/block/mine/{block_id}")
+    @GetMapping(path = "/block/mine/{block_id}", produces = { MediaType.APPLICATION_JSON_VALUE })
     public BlockDto mine_block(@PathVariable(name = "block_id") String block_id){
         return blockService.mine_block(block_id);
     }

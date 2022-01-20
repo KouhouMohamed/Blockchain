@@ -1,0 +1,145 @@
+header {
+    border-radius: 1px solid;
+}
+
+.trash-icon-svg {
+    height: 50px;
+    padding: 8px 8px 8px 0;
+    width: 50px;
+}
+
+.title-text {
+    font-weight: 700;
+    height: 50px;
+    width: 50px;
+}
+
+.logo {
+    text-decoration: none;
+}
+
+.login,
+.signup,
+.logout {
+    background-color: transparent;
+    border-color: #FF0000;
+    color: #0079D3;
+    fill: #0079D3;
+    border: 1px solid;
+    border-radius: 4px;
+    box-sizing: border-box;
+    text-align: center;
+    letter-spacing: 1px;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .5px;
+    line-height: 24px;
+    text-transform: uppercase;
+    padding: 3px 16px;
+
+    opacity: 1;
+}
+.login,
+.signup{
+    margin: 5px;
+}
+.profile {
+    background-color: transparent;
+    border-color: #7900D3;
+    color: #7900D3;
+    fill: #7900D3;
+    border: 1px solid;
+    border-radius: 4px;
+    box-sizing: border-box;
+    text-align: center;
+    letter-spacing: 1px;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .5px;
+    line-height: 24px;
+    padding: 3px 16px;
+    opacity: 1;
+}
+.username {
+    background-color: #FF7F50;
+    border-color: #FF7F50;
+    color: #FFFFFF;
+    fill: #FFFFFF;
+    border: 1px solid;
+    border-radius: 4px;
+    box-sizing: border-box;
+    text-align: center;
+    letter-spacing: 1px;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .5px;
+    line-height: 24px;
+    text-transform: uppercase;
+    padding: 3px 16px;
+    margin: 5px;
+    opacity: 1;
+}
+.links{
+    margin-left: 30px;
+}
+.link {
+    background-color: transparent;
+    border-color: #0000FF;
+    color: #0000FF;
+    fill: #0000FF;
+    border: 1px solid;
+    border-radius: 4px;
+    box-sizing: border-box;
+    text-align: center;
+    letter-spacing: 1px;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .5px;
+    line-height: 24px;
+    text-transform: uppercase;
+    padding: 3px 16px;
+    margin: 5px;
+    opacity: 1;
+}
+.link:hover,.choosen{
+    background-color: #0000FF;
+    border-color: #FFFFFF;
+    color: #FFFFFF;
+}
+.link:focus{
+    background-color: #0000FF;
+    border-color: #FFFFFF;
+    color: #FFFFFF;
+}
+.profile:hover{
+    background-color: #0000FF;
+    border-color: #0000FF;
+    color: aliceblue;
+}
+
+.logout:hover{
+    background-color: #FF0000;
+    border-color: #FF0000;
+    color: aliceblue;
+}
+.signup {
+    background-color: #0079D3;
+    border-color: #0079D3;
+    color: aliceblue;
+}
+
+.signup:hover {
+    opacity: 0.6;
+}
+
+.form {
+    padding: 5px;
+}
+
+.selector {
+    margin-right: 5px;
+}

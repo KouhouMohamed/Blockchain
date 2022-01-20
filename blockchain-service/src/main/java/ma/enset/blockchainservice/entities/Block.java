@@ -22,7 +22,11 @@ public class Block {
     private String previous_hash;
     private int nonce;
 
-    @OneToMany(mappedBy = "block")
+    /*
+     We add cascade to say that wehen we save a block we save with it the transactions
+     and when we delete it we delete the transactions(strong relation : composition)
+     */
+    @OneToMany(mappedBy = "block",cascade = CascadeType.PERSIST)
     private Collection<Transaction> transactions;
 
     @JsonIgnore

@@ -35,8 +35,8 @@ public class BlockchainController {
         return blockchainSerice.get_blockchain_blocks(blockchain);
     }
     @PostMapping(path = "/blockchain/add", produces = { MediaType.APPLICATION_JSON_VALUE },consumes = { MediaType.APPLICATION_JSON_VALUE })
-    public BlockchainDto createBlockchain(){
-        return blockchainSerice.create_blockchain();
+    public BlockchainDto createBlockchain(@RequestBody BlockchainDto blockchain){
+        return blockchainSerice.create_blockchain(blockchain);
     }
 
     @PutMapping(path = "/blockchain/{blockchainId}/pendingTransactions",produces = { MediaType.APPLICATION_JSON_VALUE },consumes = { MediaType.APPLICATION_JSON_VALUE })
@@ -46,14 +46,18 @@ public class BlockchainController {
         return blockchainSerice.pendingTransactions(blockchaineId, transactions);
     }
 
-    @PutMapping(path = "/blockchain/{blockchainId}/mine_block/{blockId}",
+    @PutMapping(path = "/blockchain/{blockchainName}/mine_block/{blockId}",
             produces = { MediaType.APPLICATION_JSON_VALUE },consumes = { MediaType.APPLICATION_JSON_VALUE })
-    public BlockchainDto mine_block(@PathVariable(name = "blockchainId") String blockchainId,@PathVariable(name = "blockId") String blockId){
+    public BlockchainDto mine_block(@PathVariable(name = "blockchainName") String blockchainName,@PathVariable(name = "blockId") String blockId){
 
-        return blockchainSerice.mine_block(blockchainId,blockId);
+        return blockchainSerice.mine_block(blockchainName,blockId);
     }
     @GetMapping(path = "/blockchain/{blockchainId}/lastblock",produces = { MediaType.APPLICATION_JSON_VALUE })
     public BlockDto getLastBlock(@PathVariable(name = "blockchainId") String blockchainId){
         return blockchainSerice.get_last_block(blockchainId);
+    }
+    @PostMapping(path = "/blockchain/{blockchainName}/addblock",produces = { MediaType.APPLICATION_JSON_VALUE })
+    public BlockchainDto addBlock(@PathVariable(name = "blockchainName") String blockchainName, @RequestBody BlockDto blockDto){
+        return blockchainSerice.add_block(blockchainName, blockDto);
     }
 }

@@ -23,6 +23,8 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         super.configure(http);
+        http.csrf().disable();
+        http.authorizeRequests().antMatchers("/h2-console/**").permitAll();
         http.authorizeRequests().antMatchers("/blockchain/**").hasAuthority("manager");
         http.authorizeRequests().antMatchers("/block/**").hasAnyAuthority("manager","user");
     }

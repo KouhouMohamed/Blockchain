@@ -29,7 +29,7 @@ public class BlockchainServiceApplication {
     CommandLineRunner start(BlockService blockService, BlockchainSerice blockchainSerice) {
         return args -> {
             // create a blockchaine with genisis blobk
-            BlockchainDto blockchain = blockchainSerice.create_blockchain();
+            BlockchainDto blockchain = blockchainSerice.create_blockchain(new BlockchainDto(null, "blockchain1", 2,2,null));
 
             /*
             // get the hash of the block before mining it
